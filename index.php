@@ -40,75 +40,39 @@
 	//Dropzone.options.myAwesomeDropzone = false;
 	Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
 
-		uploadMultiple: false,
+		uploadMultiple: true,
 		acceptedFiles:'.jpg,.png,.jpeg,.gif',
 		parallelUploads: 6,
-		url: 'https://api.cloudinary.com/v1_1/cloud9/image/upload',
+		url: 'https://api.cloudinary.com/v1_1/kenedy/image/upload',
 
 
 		  // The setting up of the dropzone
 		  init: function() {
 		    var myDropzone = this;
 
-		    // First change the button to actually tell Dropzone to process the queue.
-		    /*document.querySelector("button[type=submit]").addEventListener("click", function(e) {
-		      // Make sure that the form isn't actually being sent.
-		      e.preventDefault();
-		      e.stopPropagation();
-		      myDropzone.processQueue();
-		    });*/
 
-		    this.on('sending', function (file, xhr, formData) {
-			formData.append('api_key', 149743782894548);
-			formData.append('timestamp', Date.now() / 1000 | 0);
-			formData.append('upload_preset', 'vpyjhb2o');
+		    /*this.on('sending', function (file, xhr, formData) {
+				formData.append('api_key', 149743782894548);
+				formData.append('timestamp', Date.now() / 1000 | 0);
+				formData.append('upload_preset', 'vpyjhb2o');
+			});*/
+
+			this.on('sendingmultiple', function (file, xhr, formData) {
+				formData.append('api_key', 149743782894548);
+				formData.append('timestamp', Date.now() / 1000 | 0);
+				formData.append('upload_preset', 'vpyjhb2o');
 			});
 
-			this.on('success', function (file, response) {
+			/*this.on('success', function (file, response) {
 				console.log('Success! Cloudinary public ID is', response.public_id);
-			});
+			});*/
 
-		    /*// Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-		    // of the sending event because uploadMultiple is set to true.
-		    this.on("sendingmultiple", function() {
-		      // Gets triggered when the form is actually being sent.
-		      // Hide the success button or the complete form.
-		      console.log('form being processed');
-		    });
-
-		    this.on("successmultiple", function(files, response) {
-		      // Gets triggered when the files have successfully been sent.
-		      // Redirect user or notify of success.
-		      var formData = new FormData(document.getElementById("my-form"));
-		      //console.log(formData.get('firstname'));
-
-		        $.ajax({
-		            type: 'POST',
-		            headers: {"cache-control": "no-cache"},
-		            url: "upload.php",
-		            async: true,
-		            cache: false,
-		            dataType: "json",
-		            data: formData,
-		            processData: false,
-		            contentType: false,
-		            success: function (jsonData, textStatus, jqXHR) {
-
-		                console.log("fname: "+jsonData["fname"]);
-
-
-		            },
-		            error: function (XMLHttpRequest, textStatus, errorThrown) {
-		                console.log(textStatus);
-		            }
-		        });
-
+			this.on("successmultiple", function(files, response) {
+		      
+				console.log(response);
 		      //window.location="results.php";
 		    });
-		    this.on("errormultiple", function(files, response) {
-		      // Gets triggered when there was an error sending the files.
-		      // Maybe show form again, and notify user of error
-		    });*/
+
 		  }
 
 		}
