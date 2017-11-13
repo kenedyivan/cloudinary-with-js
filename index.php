@@ -9,8 +9,6 @@
 
 
 		<form id="my-form">
-		<input type="text" name="firstname" id="firstname" />
-	    <input type="text" name="lastname" id="lastname" />
 	    <div>
 			<div id="my-awesome-dropzone" class="dropzone"></div>
 		</div>
@@ -42,26 +40,35 @@
 	//Dropzone.options.myAwesomeDropzone = false;
 	Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
 
-		  // The configuration we've talked about above
-		  url:'upload.php',
-		  autoProcessQueue: false,
-		  uploadMultiple: true,
-		  parallelUploads: 5,
-		  maxFiles: 5,
+		uploadMultiple: false,
+		acceptedFiles:'.jpg,.png,.jpeg,.gif',
+		parallelUploads: 6,
+		url: 'https://api.cloudinary.com/v1_1/cloud9/image/upload',
+
 
 		  // The setting up of the dropzone
 		  init: function() {
 		    var myDropzone = this;
 
 		    // First change the button to actually tell Dropzone to process the queue.
-		    document.querySelector("button[type=submit]").addEventListener("click", function(e) {
+		    /*document.querySelector("button[type=submit]").addEventListener("click", function(e) {
 		      // Make sure that the form isn't actually being sent.
 		      e.preventDefault();
 		      e.stopPropagation();
 		      myDropzone.processQueue();
-		    });
+		    });*/
 
-		    // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+		    this.on('sending', function (file, xhr, formData) {
+			formData.append('api_key', 149743782894548);
+			formData.append('timestamp', Date.now() / 1000 | 0);
+			formData.append('upload_preset', 'vpyjhb2o');
+			});
+
+			this.on('success', function (file, response) {
+				console.log('Success! Cloudinary public ID is', response.public_id);
+			});
+
+		    /*// Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
 		    // of the sending event because uploadMultiple is set to true.
 		    this.on("sendingmultiple", function() {
 		      // Gets triggered when the form is actually being sent.
@@ -101,7 +108,7 @@
 		    this.on("errormultiple", function(files, response) {
 		      // Gets triggered when there was an error sending the files.
 		      // Maybe show form again, and notify user of error
-		    });
+		    });*/
 		  }
 
 		}
