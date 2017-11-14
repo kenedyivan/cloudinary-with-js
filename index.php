@@ -40,10 +40,22 @@
 	//Dropzone.options.myAwesomeDropzone = false;
 	Dropzone.options.myAwesomeDropzone = { // The camelized version of the ID of the form element
 
-		uploadMultiple: true,
+		/*uploadMultiple: false,
 		acceptedFiles:'.jpg,.png,.jpeg,.gif',
 		parallelUploads: 6,
+		url: 'https://api.cloudinary.com/v1_1/kenedy/image/upload',*/
+
+		//working on local
+		/*url: 'upload.php',
+		autoProcessQueue: true,
+		uploadMultiple: false,*/
+
 		url: 'https://api.cloudinary.com/v1_1/kenedy/image/upload',
+		acceptedFiles:'.jpg,.png,.jpeg,.gif',
+		autoProcessQueue: true,
+		uploadMultiple: false,
+
+
 
 
 		  // The setting up of the dropzone
@@ -51,27 +63,28 @@
 		    var myDropzone = this;
 
 
-		    /*this.on('sending', function (file, xhr, formData) {
-				formData.append('api_key', 149743782894548);
-				formData.append('timestamp', Date.now() / 1000 | 0);
-				formData.append('upload_preset', 'vpyjhb2o');
-			});*/
-
-			this.on('sendingmultiple', function (file, xhr, formData) {
+		    this.on('sending', function (file, xhr, formData) {
 				formData.append('api_key', 149743782894548);
 				formData.append('timestamp', Date.now() / 1000 | 0);
 				formData.append('upload_preset', 'vpyjhb2o');
 			});
 
-			/*this.on('success', function (file, response) {
-				console.log('Success! Cloudinary public ID is', response.public_id);
+			/*this.on('sendingmultiple', function (file, xhr, formData) {
+				formData.append('api_key', 149743782894548);
+				formData.append('timestamp', Date.now() / 1000 | 0);
+				formData.append('upload_preset', 'vpyjhb2o');
 			});*/
 
-			this.on("successmultiple", function(files, response) {
+			this.on('success', function (file, response) {
+				//console.log('Success! Cloudinary public ID is', response.public_id);
+				console.log(response);
+			});
+
+			/*this.on("successmultiple", function(files, response) {
 		      
 				console.log(response);
 		      //window.location="results.php";
-		    });
+		    });*/
 
 		  }
 
